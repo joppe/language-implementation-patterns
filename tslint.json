@@ -4,6 +4,9 @@
         "tslint-microsoft-contrib"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "no-reserved-keywords": false,
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"]
+    },
     "rulesDirectory": []
 }
