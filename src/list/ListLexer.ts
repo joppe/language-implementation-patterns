@@ -56,7 +56,7 @@ const RBRACK: string = ']';
 const WHITESPACE_RE: RegExp = /\s/;
 
 /**
- * @class LL1Lexer
+ * @class ListLexer
  */
 export class ListLexer extends LL1Lexer {
     /**
