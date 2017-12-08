@@ -32,7 +32,7 @@ export abstract class LL1Parser {
         if (this.lookahead.type === tokenType) {
             this.consume();
         } else {
-            throw new Error(`Expecting "${this.input.getTokenName(tokenType).toString()}", found "${this.lookahead.toString()}"`);
+            throw new Error(`Expecting "${this.input.getTokenName(tokenType)}", found "${this.lookahead.toString()}"`);
         }
     }
 
