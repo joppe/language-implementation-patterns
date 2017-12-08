@@ -13,7 +13,7 @@ export abstract class LLkParser {
     /**
      * @type {Token[]}
      */
-    protected lookahead: Token[];
+    protected lookahead: Token[] = [];
 
     /**
      * @type {number}
@@ -35,7 +35,7 @@ export abstract class LLkParser {
         this.input = input;
         this.bufferSize = bufferSize;
 
-        for (let i: number = 0; i <= this.bufferSize; i += 1) {
+        for (let i: number = 0; i < this.bufferSize; i += 1) {
             this.consume();
         }
     }
