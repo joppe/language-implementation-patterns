@@ -137,8 +137,8 @@ export class ListLexer extends LL1Lexer {
      */
     private isLetter(): boolean {
         return (
-            this.char >= 'a' && this.char <= 'x' ||
-            this.char >= 'A' && this.char <= 'X'
+            this.char >= 'a' && this.char <= 'z' ||
+            this.char >= 'A' && this.char <= 'Z'
         );
     }
 
