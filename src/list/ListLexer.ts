@@ -1,4 +1,4 @@
-import {EOF, EOF_TYPE, Lexer, TokenTypeReference} from 'app/lip/Lexer';
+import {EOF, EOF_TYPE, LL1Lexer, TokenTypeReference} from 'app/lip/LL1Lexer';
 import {Token} from 'app/lip/Token';
 
 /**
@@ -56,11 +56,12 @@ const RBRACK: string = ']';
 const WHITESPACE_RE: RegExp = /\s/;
 
 /**
- * @class Lexer
+ * @class LL1Lexer
  */
-export class ListLexer extends Lexer {
+export class ListLexer extends LL1Lexer {
     /**
      * @returns {Token}
+     * @throws {Error}
      */
     public nextToken(): Token {
         while (this.char !== EOF) {
@@ -69,7 +70,7 @@ export class ListLexer extends Lexer {
             } else if (COMMA === this.char) {
                 this.consume();
 
-                return new Token(TokenTypes.COMMA, this.getTokenName(TokenTypes.COMMA), this.char);
+                return new Token(TokenTypes.COMMA, this.getTokenName(TokenTypes.COMMA), COMMA);
             } else if (LBRACK === this.char) {
                 this.consume();
 
@@ -93,6 +94,7 @@ export class ListLexer extends Lexer {
     /**
      * @param {number} type
      * @returns {string}
+     * @throws {Error}
      */
     public getTokenName(type: number): string {
         const name: string = TokenNames[type];
@@ -123,6 +125,7 @@ export class ListLexer extends Lexer {
 
         do {
             buffer += this.char;
+
             this.consume();
         } while (this.isLetter());
 

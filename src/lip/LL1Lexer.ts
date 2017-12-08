@@ -22,9 +22,9 @@ export const EOF: string = '-1';
 export const EOF_TYPE: number = 1;
 
 /**
- * @class Lexer
+ * @class LL1Lexer
  */
-export abstract class Lexer {
+export abstract class LL1Lexer {
     /**
      * @type {string}
      * @protected
@@ -75,6 +75,7 @@ export abstract class Lexer {
 
     /**
      * @param {string} char
+     * @throws {Error}
      */
     public match(char: string): void {
         if (this.char === char) {

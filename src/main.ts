@@ -1,17 +1,14 @@
-import {EOF_TYPE} from 'app/lip/Lexer';
-import {Token} from 'app/lip/Token';
-import {ListLexer} from 'app/url/ListLexer';
+import {ListLexer} from 'app/list/ListLexer';
+import {ListParser} from 'app/list/ListParser';
+
+const FUNC_NAME: string = 'parse';
 
 /**
- * Just test the lexer
+ * Add a function to the global scope so it can be called from the console.
  */
+window[FUNC_NAME] = (input: string): void => {
+    const lexer: ListLexer = new ListLexer(input);
+    const parser: ListParser = new ListParser(lexer);
 
-const lexer: ListLexer = new ListLexer('[a, b]');
-let token: Token = lexer.nextToken();
-
-while (token.type !== EOF_TYPE) {
-    window.console.log(token.toString());
-    token = lexer.nextToken();
-}
-
-window.console.log(token.toString());
+    parser.list();
+};

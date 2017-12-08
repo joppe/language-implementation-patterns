@@ -51,6 +51,6 @@ export class Token {
      * @returns {string}
      */
     public toString(): string {
-        return `<${this.text}, ${this._name}>`;
+        return `<${this.text}, ${this._name}, ${this._type}>`;
     }
 }
