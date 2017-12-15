@@ -1,5 +1,5 @@
 import {ExtendedListLexer} from 'app/list/ExtendedListLexer';
-import {ExtendedListParser} from 'app/list/ExtendedListParser';
+import {ParallelAssignListParser} from 'app/list/ParallelAssignListParser';
 
 const FUNC_NAME: string = 'parse';
 
@@ -8,7 +8,7 @@ const FUNC_NAME: string = 'parse';
  */
 window[FUNC_NAME] = (input: string): void => {
     const lexer: ExtendedListLexer = new ExtendedListLexer(input);
-    const parser: ExtendedListParser = new ExtendedListParser(lexer, 2);
+    const parser: ParallelAssignListParser = new ParallelAssignListParser(lexer);
 
-    parser.list();
+    parser.stat();
 };
