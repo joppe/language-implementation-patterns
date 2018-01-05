@@ -10,7 +10,7 @@ import {Token} from 'app/lip/Token';
  * NAME: ('a'..'z'|'A'..'Z')
  */
 
-export { EOF_TYPE };
+export {EOF_TYPE};
 
 /**
  * Available Token types
