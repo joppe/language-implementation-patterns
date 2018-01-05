@@ -32,40 +32,20 @@ export class ParallelAssignListParser extends BacktrackParser {
      * @returns {boolean}
      */
     public speculateStatList(): boolean {
-        let success: boolean = true;
-
-        this.mark();
-
-        try {
+        return this.speculate((): void => {
             this.list();
             this.match(EOF_TYPE);
-        } catch (e) {
-            success = false;
-        }
-
-        this.release();
-
-        return success;
+        });
     }
 
     /**
      * @returns {boolean}
      */
     public speculateStatAssign(): boolean {
-        let success: boolean = true;
-
-        this.mark();
-
-        try {
+        return this.speculate((): void => {
             this.assign();
             this.match(EOF_TYPE);
-        } catch (e) {
-            success = false;
-        }
-
-        this.release();
-
-        return success;
+        });
     }
 
     /**

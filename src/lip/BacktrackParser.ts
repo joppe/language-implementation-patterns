@@ -137,4 +137,27 @@ export abstract class BacktrackParser {
     public isSpeculating(): boolean {
         return this.markers.length > 0;
     }
+
+    /**
+     * Try to match a rule/alternative.
+     * Rewind the lookahead after trying.
+     *
+     * @param {Function} alternative
+     * @returns {boolean}
+     */
+    protected speculate(alternative: Function): boolean {
+        let isSuccessFul: boolean = true;
+
+        this.mark();
+
+        try {
+            alternative();
+        } catch (e) {
+            isSuccessFul = false;
+        }
+
+        this.release();
+
+        return isSuccessFul;
+    }
 }
