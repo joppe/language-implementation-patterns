@@ -1,21 +1,16 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./",
-        "experimentalDecorators": true,
-        "module": "commonjs",
-        "outDir": "dist",
-        "paths": {
-            "app/*": [
-                "./src/*"
-            ]
-        },
-        "sourceMap": true,
-        "target": "es5"
-    },
-    "exclude": [
-        "dist"
-    ],
-    "include": [
-        "./src/**/*.ts"
-    ]
+  "compilerOptions": {
+      "baseUrl": "./",
+      "experimentalDecorators": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "removeComments": true,
+      "sourceMap": true,
+      "strictBindCallApply": true,
+      "strictNullChecks": true,
+      "target": "es6"
+  },
+  "include": [
+      "src/**/*.ts"
+  ]
 }
