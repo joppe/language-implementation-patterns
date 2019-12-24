@@ -18,11 +18,11 @@ export class Token {
         return this._type;
     }
 
-    public text(): string {
+    public get text(): string {
         return this._text;
     }
 
     public toString(): string {
-        return `<${this._text},${this._name}>`;
+        return `<'${this._text}',${this._name}>`;
     }
 }

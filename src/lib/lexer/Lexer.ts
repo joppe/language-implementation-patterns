@@ -7,6 +7,8 @@ import { Token } from '../token/Token';
  * - scanners
  * - lexical anaylyzers
  * - tokenizers
+ *
+ * This is the implementation of a LL(1) Recursive-Descent Lexer
  */
 
 export abstract class Lexer {
