@@ -1,18 +1,11 @@
+import { Context } from './Context';
+import { DBQUOTES, EQUALS, FSLASH, GT, LT, WHITESPACE_RE } from '../token/vocabulary';
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
 import { Lexer } from '../../lib/lexer/Lexer';
-import { Token } from '../../lib/token/Token';
-import { DBQUOTES, EQUALS, FSLASH, GT, LT, WHITESPACE_RE } from '../token/vocabulary';
-import { Types } from '../token/Types';
 import { Names } from '../token/Names';
-
-enum Context {
-    EMPTY,
-    TAG,
-    ATTRIBUTE,
-    ATTRIBUTE_VALUE,
-    CONTENT,
-}
+import { Token } from '../../lib/token/Token';
+import { Types } from '../token/Types';
 
 export class HTMLLexer extends Lexer {
     private context: Context = Context.EMPTY;
