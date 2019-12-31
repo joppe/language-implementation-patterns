@@ -48,4 +48,8 @@ export abstract class Lexer {
             this.char = this.input.charAt(this.index);
         }
     }
+
+    protected createToken(type: number, text: string): Token {
+        return new Token(type, this.getTokenName(type), text);
+    }
 }

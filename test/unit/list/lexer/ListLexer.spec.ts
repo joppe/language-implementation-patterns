@@ -1,4 +1,4 @@
-import { ListLexer} from '../../../../src/list/lexer/ListLexer';
+import { ListLexer } from '../../../../src/list/lexer/ListLexer';
 import { Token } from '../../../../src/lib/token/Token';
 import { Types } from '../../../../src/list/token/Types';
 import { EOF_TYPE } from '../../../../src/lib/token/Type';

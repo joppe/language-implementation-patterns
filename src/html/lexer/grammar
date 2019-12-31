@@ -1,0 +1,14 @@
+https://www.w3.org/TR/WD-sgml-lex/
+
+document: element*
+element: block | inline
+block: TAG_OPEN element | DATA TAG_CLOSE
+inline: TAG_OPEN inline | DATA TAG_CLOSE
+TAG_OPEN: '<' tag_name attribute* '>'
+TAG_CLOSE: '<' '/' tag_name '>'
+attribute: attr_name '=' '"' attr_value '"'
+tag_name: CHAR [CHAR NUM '-' '_']*
+attr_value: !"*
+DATA: !<*
+CHAR: [a-z]
+NUM: [0-9]

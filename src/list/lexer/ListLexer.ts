@@ -7,10 +7,6 @@ import { Types } from '../token/Types';
 import { Names } from '../token/Names';
 
 export class ListLexer extends Lexer {
-    public constructor(input: string) {
-        super(input);
-    }
-
     public nextToken(): Token {
         while (this.char !== EOF) {
             if (this.isWhitespace()) {
@@ -45,10 +41,6 @@ export class ListLexer extends Lexer {
         }
 
         throw new Error(`Invalid token type "${type}"`);
-    }
-
-    private createToken(type: number, text: string): Token {
-        return new Token(type, this.getTokenName(type), text);
     }
 
     /**
