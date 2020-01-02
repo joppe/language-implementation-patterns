@@ -2,13 +2,13 @@ import { Buffer } from '../../lib/string/Buffer';
 import { Context } from './Context';
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
-import { Lexer } from '../../lib/lexer/Lexer';
+import { LL1RecursiveDescentLexer } from '../../lib/lexer/LL1RecursiveDescentLexer';
 import { Names } from '../token/Names';
 import { Token } from '../../lib/token/Token';
 import { Types } from '../token/Types';
 import { Vocabulary, WHITESPACE_RE } from '../token/Vocabulary';
 
-export class HTMLLexer extends Lexer {
+export class HTMLLexer extends LL1RecursiveDescentLexer {
     private context: Context = Context.EMPTY;
 
     public nextToken(): Token {

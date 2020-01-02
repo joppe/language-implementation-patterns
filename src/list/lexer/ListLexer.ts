@@ -1,12 +1,12 @@
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
-import { Lexer } from '../../lib/lexer/Lexer';
+import { LL1RecursiveDescentLexer } from '../../lib/lexer/LL1RecursiveDescentLexer';
 import { Token } from '../../lib/token/Token';
 import { COMMA, LBRACK, RBRACK, WHITESPACE_RE } from '../token/vocabulary';
 import { Types } from '../token/Types';
 import { Names } from '../token/Names';
 
-export class ListLexer extends Lexer {
+export class ListLexer extends LL1RecursiveDescentLexer {
     public nextToken(): Token {
         while (this.char !== EOF) {
             if (this.isWhitespace()) {
