@@ -1,13 +1,13 @@
-import { ListLexer } from '../../../../src/list/lexer/ListLexer';
+import { LL1ListLexer } from '../../../../src/list/lexer/LL1ListLexer';
 import { Token } from '../../../../src/lib/token/Token';
 import { Types } from '../../../../src/list/token/Types';
 import { EOF_TYPE } from '../../../../src/lib/token/Type';
 
-describe('ListLexer', (): void => {
+describe('LL1ListLexer', (): void => {
     describe('nextToken', (): void => {
         it('return the next tokens', (): void => {
             const input: string = '[a,b]';
-            const lexer: ListLexer = new ListLexer(input);
+            const lexer: LL1ListLexer = new LL1ListLexer(input);
             const token: Token = lexer.nextToken();
 
             expect(token.type).toEqual(Types.LBRACK);
@@ -16,7 +16,7 @@ describe('ListLexer', (): void => {
 
         it('proceeds to next token', (): void => {
             const input: string = '[a,b]';
-            const lexer: ListLexer = new ListLexer(input);
+            const lexer: LL1ListLexer = new LL1ListLexer(input);
 
             lexer.nextToken();
 
@@ -31,7 +31,7 @@ describe('ListLexer', (): void => {
     describe('getTokenName', (): void => {
         it('return the name of the token type', (): void => {
             const input: string = '[a,b]';
-            const lexer: ListLexer = new ListLexer(input);
+            const lexer: LL1ListLexer = new LL1ListLexer(input);
             const token: Token = lexer.nextToken();
 
             expect(lexer.getTokenName(token.type)).toEqual('LBRACK');
@@ -40,7 +40,7 @@ describe('ListLexer', (): void => {
 
     it('ignores whitespace', (): void => {
         const input: string = '            [        a , b]';
-        const lexer: ListLexer = new ListLexer(input);
+        const lexer: LL1ListLexer = new LL1ListLexer(input);
         const token: Token = lexer.nextToken();
 
         expect(token.type).toEqual(Types.LBRACK);
@@ -49,7 +49,7 @@ describe('ListLexer', (): void => {
 
     it('retrieve all tokens', (): void => {
         const input: string = '            [        a , b]';
-        const lexer: ListLexer = new ListLexer(input);
+        const lexer: LL1ListLexer = new LL1ListLexer(input);
         const tokens: string[] = [];
         let token: Token = lexer.nextToken();
 

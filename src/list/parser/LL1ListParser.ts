@@ -1,7 +1,7 @@
 import { LL1RecursiveDescentParser } from '../../lib/parser/LL1RecursiveDescentParser';
 import { Types } from '../token/Types';
 
-export class ListParser extends LL1RecursiveDescentParser {
+export class LL1ListParser extends LL1RecursiveDescentParser {
     public list(): void {
         this.match(Types.LBRACK);
         this.elements();

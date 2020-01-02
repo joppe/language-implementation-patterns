@@ -1,8 +1,9 @@
-import { Token } from '../token/Token';
 import { Lexer } from '../lexer/Lexer';
+import { Parser } from './Parser';
+import { Token } from '../token/Token';
 
-export abstract class LL1RecursiveDescentParser {
-    protected input: Lexer;
+export abstract class LL1RecursiveDescentParser implements Parser {
+    protected readonly input: Lexer;
     protected lookahead: Token;
 
     public constructor(input: Lexer) {

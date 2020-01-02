@@ -1,28 +1,29 @@
+import { Buffer } from 'src/lib/string/Buffer';
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
 import { LL1RecursiveDescentLexer } from '../../lib/lexer/LL1RecursiveDescentLexer';
-import { Token } from '../../lib/token/Token';
-import { COMMA, LBRACK, RBRACK, WHITESPACE_RE } from '../token/vocabulary';
-import { Types } from '../token/Types';
 import { Names } from '../token/Names';
+import { Token } from '../../lib/token/Token';
+import { Types } from '../token/Types';
+import { Vocabulary, WHITESPACE_RE } from '../token/Vocabulary';
 
-export class ListLexer extends LL1RecursiveDescentLexer {
+export class LL1ListLexer extends LL1RecursiveDescentLexer {
     public nextToken(): Token {
         while (this.char !== EOF) {
             if (this.isWhitespace()) {
                 this.whitespace();
-            } else if (COMMA === this.char) {
+            } else if (this.char === Vocabulary.COMMA) {
                 this.consume();
 
-                return this.createToken(Types.COMMA, COMMA);
-            } else if (LBRACK === this.char) {
+                return this.createToken(Types.COMMA, Vocabulary.COMMA);
+            } else if (this.char === Vocabulary.LBRACK) {
                 this.consume();
 
-                return this.createToken(Types.LBRACK, LBRACK);
-            } else if (RBRACK === this.char) {
+                return this.createToken(Types.LBRACK, Vocabulary.LBRACK);
+            } else if (this.char === Vocabulary.RBRACK) {
                 this.consume();
 
-                return this.createToken(Types.RBRACK, RBRACK);
+                return this.createToken(Types.RBRACK, Vocabulary.RBRACK);
             } else if (this.isLetter()) {
                 return this.name();
             } else {
@@ -46,35 +47,35 @@ export class ListLexer extends LL1RecursiveDescentLexer {
     /**
      * Get all text belonging to a single NAME token.
      */
-    private name(): Token {
-        let buffer: string = '';
+    protected name(): Token {
+        const buffer: Buffer = new Buffer();
 
         do {
-            buffer += this.char;
+            buffer.append(this.char);
 
             this.consume();
         } while (this.isLetter());
 
-        return this.createToken(Types.NAME, buffer);
+        return this.createToken(Types.NAME, buffer.toString());
     }
 
     /**
      * Consume all whitespace. Whitespace has no meaning in the grammar.
      */
-    private whitespace(): void {
+    protected whitespace(): void {
         while (this.isWhitespace()) {
             this.consume();
         }
     }
 
-    private isLetter(): boolean {
+    protected isLetter(): boolean {
         return (
             this.char >= 'a' && this.char <= 'z' ||
             this.char >= 'A' && this.char <= 'Z'
         );
     }
 
-    private isWhitespace(): boolean {
+    protected isWhitespace(): boolean {
         return WHITESPACE_RE.test(this.char);
     }
 }
