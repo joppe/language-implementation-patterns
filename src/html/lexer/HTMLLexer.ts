@@ -1,11 +1,12 @@
+import { Buffer } from '../../lib/string/Buffer';
 import { Context } from './Context';
-import { DBQUOTES, EQUALS, FSLASH, GT, LT, WHITESPACE_RE } from '../token/vocabulary';
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
 import { Lexer } from '../../lib/lexer/Lexer';
 import { Names } from '../token/Names';
 import { Token } from '../../lib/token/Token';
 import { Types } from '../token/Types';
+import { Vocabulary, WHITESPACE_RE } from '../token/Vocabulary';
 
 export class HTMLLexer extends Lexer {
     private context: Context = Context.EMPTY;
@@ -46,22 +47,22 @@ export class HTMLLexer extends Lexer {
             this.whitespace();
         }
 
-        if (this.char === LT) {
+        if (this.char === Vocabulary.LT) {
             this.consume();
 
             this.context = Context.TAG;
 
-            return this.createToken(Types.LT, LT);
+            return this.createToken(Types.LT, Vocabulary.LT);
         }
 
         throw new Error(`Invalid character "${this.char}" in context EMPTY`);
     }
 
     private contextTag(): Token {
-        if (this.char === FSLASH) {
+        if (this.char === Vocabulary.FSLASH) {
             this.consume();
 
-            return this.createToken(Types.FSLASH, FSLASH);
+            return this.createToken(Types.FSLASH, Vocabulary.FSLASH);
         } else if (this.isLetter()) {
             this.context = Context.ATTRIBUTE;
 
@@ -78,97 +79,97 @@ export class HTMLLexer extends Lexer {
 
         if (this.isLetter()) {
             return this.attributeName();
-        } else if (this.char === EQUALS) {
+        } else if (this.char === Vocabulary.EQUALS) {
             this.consume();
 
-            return this.createToken(Types.EQUALS, EQUALS);
-        } else if (this.char === DBQUOTES) {
+            return this.createToken(Types.EQUALS, Vocabulary.EQUALS);
+        } else if (this.char === Vocabulary.DBQUOTES) {
             this.consume();
 
             this.context = Context.ATTRIBUTE_VALUE;
 
-            return this.createToken(Types.DBQUOTES, DBQUOTES);
-        } else if (this.char === GT) {
+            return this.createToken(Types.DBQUOTES, Vocabulary.DBQUOTES);
+        } else if (this.char === Vocabulary.GT) {
             this.consume();
 
             this.context = Context.CONTENT;
 
-            return this.createToken(Types.GT, GT);
+            return this.createToken(Types.GT, Vocabulary.GT);
         }
 
         throw new Error(`Invalid character "${this.char}" in context ATTRIBUTE`);
     }
 
     private contextContent(): Token {
-        if (this.char === LT) {
+        if (this.char === Vocabulary.LT) {
             this.consume();
 
             this.context = Context.TAG;
 
-            return this.createToken(Types.LT, LT);
+            return this.createToken(Types.LT, Vocabulary.LT);
         } else {
             return this.content();
         }
     }
 
     private contextAttributeValue(): Token {
-        if (this.char === DBQUOTES) {
+        if (this.char === Vocabulary.DBQUOTES) {
             this.consume();
 
             this.context = Context.ATTRIBUTE;
 
-            return this.createToken(Types.DBQUOTES, DBQUOTES);
+            return this.createToken(Types.DBQUOTES, Vocabulary.DBQUOTES);
         }
 
         return this.attributeValue();
     }
 
     private content(): Token {
-        let buffer: string = '';
+        const buffer: Buffer = new Buffer();
 
         do {
-            buffer += this.char;
+            buffer.append(this.char);
 
             this.consume();
-        } while (this.char !== LT);
+        } while (this.char !== Vocabulary.LT);
 
-        return this.createToken(Types.CONTENT, buffer);
+        return this.createToken(Types.CONTENT, buffer.toString());
     }
 
     private attributeValue(): Token {
-        let buffer: string = '';
+        const buffer: Buffer = new Buffer();
 
         do {
-            buffer += this.char;
+            buffer.append(this.char);
 
             this.consume();
-        } while (this.char !== DBQUOTES);
+        } while (this.char !== Vocabulary.DBQUOTES);
 
-        return this.createToken(Types.ATTRIBUTE_VALUE, buffer);
+        return this.createToken(Types.ATTRIBUTE_VALUE, buffer.toString());
     }
 
     private attributeName(): Token {
-        let buffer: string = '';
+        const buffer: Buffer = new Buffer();
 
         do {
-            buffer += this.char;
+            buffer.append(this.char);
 
             this.consume();
         } while (this.isId());
 
-        return this.createToken(Types.ATTRIBUTE_NAME, buffer);
+        return this.createToken(Types.ATTRIBUTE_NAME, buffer.toString());
     }
 
     private tagName(): Token {
-        let buffer: string = '';
+        const buffer: Buffer = new Buffer();
 
         do {
-            buffer += this.char;
+            buffer.append(this.char);
 
             this.consume();
         } while (this.isId());
 
-        return this.createToken(Types.TAG_NAME, buffer);
+        return this.createToken(Types.TAG_NAME, buffer.toString());
     }
 
     private whitespace(): void {
@@ -178,7 +179,7 @@ export class HTMLLexer extends Lexer {
     }
 
     private isId(): boolean {
-        return this.isLetter() || this.isDigit() || this.char === '-';
+        return this.isLetter() || this.isDigit() || this.char === Vocabulary.MINUS || this.char === Vocabulary.UNDERSCORE;
     }
 
     private isDigit(): boolean {

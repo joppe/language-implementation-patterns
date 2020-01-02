@@ -1,14 +1,21 @@
 https://www.w3.org/TR/WD-sgml-lex/
+https://www.w3.org/TR/2012/WD-html5-20120329/syntax.html#syntax
+https://gist.github.com/tkqubo/2842772
 
-document: element*
-element: block | inline
-block: TAG_OPEN element | DATA TAG_CLOSE
-inline: TAG_OPEN inline | DATA TAG_CLOSE
-TAG_OPEN: '<' tag_name attribute* '>'
-TAG_CLOSE: '<' '/' tag_name '>'
-attribute: attr_name '=' '"' attr_value '"'
-tag_name: CHAR [CHAR NUM '-' '_']*
-attr_value: !"*
-DATA: !<*
-CHAR: [a-z]
-NUM: [0-9]
+document        : element*
+element         : tag_empty | tag_pair
+tag_pair        : tag_open tag_content tag_close
+tag_content     : (content | tag)*
+tag_open        : '<' tag_name attr_list? '>'
+tag_empty       : '<' tag_name attr_list? '/' '>'
+tag_close       : '<' '/' tag_name '>'
+attr_list       : attr (attr)*
+attr            : attr-empty | attr-with-value
+attr-empty      : attr_name
+attr-with-value : attr_name '=' '"' attr_value '"'
+attr_name       : CHAR (^"'>/=)*
+attr_value      : (^")*
+tag_name        : CHAR (CHAR | NUM | '-' | '_')*
+content         : (^<)*
+CHAR            : ('a'..'z'|'A'..'Z')
+NUM             : (0..9)

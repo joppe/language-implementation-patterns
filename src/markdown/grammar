@@ -1,0 +1,33 @@
+https://github.com/MFP/OcsiBlog/blob/master/simple_markup.ml
+
+https://spec.commonmark.org/0.29/
+https://daringfireball.net/projects/markdown/syntax
+https://github.com/jgm/peg-markdown/blob/master/markdown_parser.leg
+https://github.com/markedjs/marked/blob/master/src/Lexer.js
+
+elements: element (NEWLINE element)*
+element: block | inline
+block: header
+header: h1 | h2 | h3 | h4 | h5 | h6
+h1: HASH SPACE CONTENT
+h2: HASH HASH SPACE CONTENT
+h3: HASH HASH HASH SPACE CONTENT
+h4: HASH HASH HASH HASH SPACE CONTENT
+h5: HASH HASH HASH HASH HASH SPACE CONTENT
+h6: HASH HASH HASH HASH HASH HASH SPACE CONTENT
+inline: italic | bold | strikethrough
+italic: ASTERISK INLINE_CONTENT ASTERISK
+bold: ASTERISK ASTERISK INLINE_CONTENT ASTERISK ASTERISK
+strikethrough: TILDE TILDE INLINE_CONTENT TILDE TILDE
+CONTENT: *
+INLINE_CONTENT: *
+BSLASH: \
+LBRACK: [
+RBRACK: ]
+ASTERISK: *
+UNDERSCORE: _
+TILDE: ~
+BACKTICK: `
+HASH: #
+SPACE: \s
+NEWLINE: \n
