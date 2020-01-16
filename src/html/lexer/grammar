@@ -5,17 +5,17 @@ https://gist.github.com/tkqubo/2842772
 document        : element*
 element         : tag_empty | tag_pair
 tag_pair        : tag_open tag_content tag_close
-tag_content     : (content | tag)*
-tag_open        : '<' tag_name attr_list? '>'
-tag_empty       : '<' tag_name attr_list? '/' '>'
-tag_close       : '<' '/' tag_name '>'
-attr_list       : attr (attr)*
-attr            : attr-empty | attr-with-value
-attr-empty      : attr_name
-attr-with-value : attr_name '=' '"' attr_value '"'
-attr_name       : CHAR (^"'>/=)*
-attr_value      : (^")*
-tag_name        : CHAR (CHAR | NUM | '-' | '_')*
-content         : (^<)*
+tag_content     : (CONTENT | element)*
+tag_open        : '<' TAG_NAME attr_list? '>'
+tag_empty       : '<' 'area' | 'base' | 'br' | 'embed' | 'hr' | 'iframe' | 'img' | 'input' | 'link' | 'meta' | 'param' | 'source' | 'track' attr_list? '/' '>'
+tag_close       : '<' '/' TAG_NAME '>'
+attr_list       : (attr)*
+attr            : attr_empty | attr_with_value
+attr_empty      : ATTR_NAME
+attr_with_value : ATTR_NAME '=' '"' ATTR_VALUE '"'
+ATTR_NAME       : CHAR (^"'>/=)*
+ATTR_VALUE      : (^")*
+TAG_NAME        : CHAR (CHAR | NUM | '-' | '_')*
+CONTENT         : (^<)*
 CHAR            : ('a'..'z'|'A'..'Z')
 NUM             : (0..9)
