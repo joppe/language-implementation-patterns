@@ -1,4 +1,4 @@
-import { Buffer } from 'src/lib/string/Buffer';
+import { Buffer } from '../../lib/string/Buffer';
 import { EOF } from '../../lib/token/vocabulary';
 import { EOF_TYPE } from '../../lib/token/Type';
 import { LL1RecursiveDescentLexer } from '../../lib/lexer/LL1RecursiveDescentLexer';
