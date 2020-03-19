@@ -1,6 +1,7 @@
 export enum Types {
     LT = 2,
     GT,
+    BSLASH,
     FSLASH,
     EQUALS,
     DBQUOTES,

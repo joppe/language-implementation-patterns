@@ -1,7 +1,7 @@
-import { HTMLLexer } from '../../../../src/html/lexer/HTMLLexer';
-import { Token } from '../../../../src/lib/token/Token';
-import { Types } from '../../../../src/html/token/Types';
-import { EOF_TYPE } from '../../../../src/lib/token/Type';
+import { HTMLLexer } from '@apestaartje/lip/html/lexer/HTMLLexer';
+import { Token } from '@apestaartje/lip/lib/token/Token';
+import { Types } from '@apestaartje/lip/html/token/Types';
+import { EOF_TYPE } from '@apestaartje/lip/lib/token/Type';
 
 describe('HTMLLexer', (): void => {
     describe('nextToken', (): void => {
@@ -17,7 +17,7 @@ describe('HTMLLexer', (): void => {
     });
 
     it('retrieve all tokens', (): void => {
-        const input: string = '<span class="bar"><b>foo</b>?</span>';
+        const input: string = '<span class="bar"><b>foo</b>?<input required /></span>';
         const lexer: HTMLLexer = new HTMLLexer(input);
         const tokens: string[] = [];
         let token: Token = lexer.nextToken();
@@ -47,6 +47,11 @@ describe('HTMLLexer', (): void => {
             '<\'b\',TAG_NAME>',
             '<\'>\',GT>',
             '<\'?\',CONTENT>',
+            '<\'<\',LT>',
+            '<\'input\',TAG_NAME>',
+            '<\'required\',ATTRIBUTE_NAME>',
+            '<\'/\',FSLASH>',
+            '<\'>\',GT>',
             '<\'<\',LT>',
             '<\'/\',FSLASH>',
             '<\'span\',TAG_NAME>',

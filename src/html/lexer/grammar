@@ -2,20 +2,20 @@ https://www.w3.org/TR/WD-sgml-lex/
 https://www.w3.org/TR/2012/WD-html5-20120329/syntax.html#syntax
 https://gist.github.com/tkqubo/2842772
 
-document        : element*
-element         : tag_empty | tag_pair
-tag_pair        : tag_open tag_content tag_close
-tag_content     : (CONTENT | element)*
-tag_open        : '<' TAG_NAME attr_list? '>'
-tag_empty       : '<' 'area' | 'base' | 'br' | 'embed' | 'hr' | 'iframe' | 'img' | 'input' | 'link' | 'meta' | 'param' | 'source' | 'track' attr_list? '/' '>'
-tag_close       : '<' '/' TAG_NAME '>'
-attr_list       : (attr)*
-attr            : attr_empty | attr_with_value
-attr_empty      : ATTR_NAME
-attr_with_value : ATTR_NAME '=' '"' ATTR_VALUE '"'
-ATTR_NAME       : CHAR (^"'>/=)*
-ATTR_VALUE      : (^")*
-TAG_NAME        : CHAR (CHAR | NUM | '-' | '_')*
-CONTENT         : (^<)*
-CHAR            : ('a'..'z'|'A'..'Z')
-NUM             : (0..9)
+document            : element*
+element             : tag_self_closing | tag_pair
+tag_self_closing    : '<' 'area' | 'base' | 'br' | 'embed' | 'hr' | 'iframe' | 'img' | 'input' | 'link' | 'meta' | 'param' | 'source' | 'track' attr_list? '/' '>'
+tag_pair            : tag_open tag_content tag_close
+tag_content         : (CONTENT | element)*
+tag_open            : '<' TAG_NAME attr_list? '>'
+tag_close           : '<' '/' TAG_NAME '>'
+attr_list           : (attr)*
+attr                : attr_empty | attr_with_value
+attr_empty          : ATTR_NAME
+attr_with_value     : ATTR_NAME '=' '"' ATTR_VALUE '"'
+ATTR_NAME           : CHAR (^"'>/=)*
+ATTR_VALUE          : (^")*
+TAG_NAME            : CHAR (CHAR | NUM | '-' | '_')*
+CONTENT             : (^<)*
+CHAR                : ('a'..'z'|'A'..'Z')
+NUM                 : (0..9)

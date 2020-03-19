@@ -1,5 +1,5 @@
-import { LL1ListLexer } from '../../../../src/list/lexer/LL1ListLexer';
-import { LL1ListParser } from '../../../../src/list/parser/LL1ListParser';
+import { LL1ListLexer } from '@apestaartje/lip/list/lexer/LL1ListLexer';
+import { LL1ListParser } from '@apestaartje/lip/list/parser/LL1ListParser';
 
 describe('LL1ListParser', (): void => {
     describe('parse', (): void => {

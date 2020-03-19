@@ -79,17 +79,29 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
 
         if (this.isLetter()) {
             return this.attributeName();
-        } else if (this.char === Vocabulary.EQUALS) {
+        }
+
+        if (this.char === Vocabulary.EQUALS) {
             this.consume();
 
             return this.createToken(Types.EQUALS, Vocabulary.EQUALS);
-        } else if (this.char === Vocabulary.DBQUOTES) {
+        }
+
+        if (this.char === Vocabulary.DBQUOTES) {
             this.consume();
 
             this.context = Context.ATTRIBUTE_VALUE;
 
             return this.createToken(Types.DBQUOTES, Vocabulary.DBQUOTES);
-        } else if (this.char === Vocabulary.GT) {
+        }
+
+        if (this.char === Vocabulary.FSLASH) {
+            this.consume();
+
+            return this.createToken(Types.FSLASH, Vocabulary.FSLASH);
+        }
+
+        if (this.char === Vocabulary.GT) {
             this.consume();
 
             this.context = Context.CONTENT;

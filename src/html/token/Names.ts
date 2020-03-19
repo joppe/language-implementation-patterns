@@ -6,6 +6,7 @@ export const Names: TypeReference = {
     [EOF_TYPE]: '<EOF>',
     [Types.LT]: 'LT',
     [Types.GT]: 'GT',
+    [Types.BSLASH]: 'BSLASH',
     [Types.FSLASH]: 'FSLASH',
     [Types.EQUALS]: 'EQUALS',
     [Types.DBQUOTES]: 'DBQUOTES',

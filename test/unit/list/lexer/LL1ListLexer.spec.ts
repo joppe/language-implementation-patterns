@@ -1,7 +1,7 @@
-import { LL1ListLexer } from '../../../../src/list/lexer/LL1ListLexer';
-import { Token } from '../../../../src/lib/token/Token';
-import { Types } from '../../../../src/list/token/Types';
-import { EOF_TYPE } from '../../../../src/lib/token/Type';
+import { LL1ListLexer } from '@apestaartje/lip/list/lexer/LL1ListLexer';
+import { Token } from '@apestaartje/lip/lib/token/Token';
+import { Types } from '@apestaartje/lip/list/token/Types';
+import { EOF_TYPE } from '@apestaartje/lip/lib/token/Type';
 
 describe('LL1ListLexer', (): void => {
     describe('nextToken', (): void => {
