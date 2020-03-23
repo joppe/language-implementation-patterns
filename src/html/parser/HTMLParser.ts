@@ -1,9 +1,20 @@
-import { LLkRecursiveDescentParser } from '../../lib/parser/LLkRecursiveDescentParser';
-import { Types } from '../token/Types';
 import { EOF_TYPE } from '../../lib/token/Type';
+import { Lexer } from '../../lib/lexer/Lexer';
+import { LLkRecursiveDescentParser } from '../../lib/parser/LLkRecursiveDescentParser';
 import { SELF_CLOSING_TAGS } from '../token/Vocabulary';
+import { Types } from '../token/Types';
 
 export class HTMLParser extends LLkRecursiveDescentParser {
+    private readonly _tagStack: string[] = [];
+
+    public constructor(lexer: Lexer) {
+        super(lexer, 2);
+    }
+
+    private get tag(): string {
+        return this._tagStack[this._tagStack.length - 1];
+    }
+
     public document(): void {
         while (this.getLookaheadType(1) === Types.LT) {
             this.element();
@@ -47,6 +58,8 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     public tagOpen(): void {
         this.match(Types.LT);
+
+        this.openTag(this.getLookaheadToken(1).text);
         this.match(Types.TAG_NAME);
 
         this.attrList();
@@ -70,6 +83,8 @@ export class HTMLParser extends LLkRecursiveDescentParser {
     public tagClose(): void {
         this.match(Types.LT);
         this.match(Types.FSLASH);
+
+        this.closeTag(this.getLookaheadToken(1).text);
         this.match(Types.TAG_NAME);
         this.match(Types.GT);
     }
@@ -92,5 +107,17 @@ export class HTMLParser extends LLkRecursiveDescentParser {
         } else {
             throw new Error(`Expecting attribute name token, found ${this.getLookaheadToken(1)}`);
         }
+    }
+
+    private openTag(tag: string): void {
+        this._tagStack.push(tag);
+    }
+
+    private closeTag(tag: string): void {
+        if (this.tag !== tag) {
+            throw new Error(`Expecting close tag for "${this.tag}" instead "${tag}" was given.`);
+        }
+
+        this._tagStack.pop();
     }
 }
