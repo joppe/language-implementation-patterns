@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run clean && node ./node_modules/.bin/tsc",
     "clean": "rm -rf dist",
-    "lint": "node_modules/.bin/tslint --config ./tslint.json --project tsconfig.json",
+    "lint": "tslint --config ./tslint.json --project tsconfig.json",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },

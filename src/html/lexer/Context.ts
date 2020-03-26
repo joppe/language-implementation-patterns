@@ -1,6 +1,7 @@
 export enum Context {
-    CONTENT,
+    EMPTY,
     TAG,
     ATTRIBUTE,
     ATTRIBUTE_VALUE,
+    CONTENT,
 }

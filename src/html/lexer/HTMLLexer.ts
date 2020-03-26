@@ -9,23 +9,21 @@ import { Types } from '../token/Types';
 import { Vocabulary, WHITESPACE_RE } from '../token/Vocabulary';
 
 export class HTMLLexer extends LL1RecursiveDescentLexer {
-    private readonly _context: Context[] = [Context.CONTENT];
-
-    private get context(): Context {
-        return this._context[this._context.length - 1];
-    }
+    private context: Context = Context.EMPTY;
 
     public nextToken(): Token {
         while (this.char !== EOF) {
             switch (this.context) {
-                case Context.CONTENT:
-                    return this.contextContent();
+                case Context.EMPTY:
+                    return this.contextEmpty();
                 case Context.TAG:
                     return this.contextTag();
                 case Context.ATTRIBUTE:
                     return this.contextAttribute();
                 case Context.ATTRIBUTE_VALUE:
                     return this.contextAttributeValue();
+                case Context.CONTENT:
+                    return this.contextContent();
                 default:
                     this.consume();
             }
@@ -44,24 +42,29 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
         throw new Error(`Invalid token type "${type}"`);
     }
 
-    private setContext(context: Context): void {
-        this._context.push(context);
-    }
+    private contextEmpty(): Token {
+        if (this.isWhitespace()) {
+            this.whitespace();
+        }
 
-    private releaseContext(): void {
-        this._context.pop();
+        if (this.char === Vocabulary.LT) {
+            this.consume();
+
+            this.context = Context.TAG;
+
+            return this.createToken(Types.LT, Vocabulary.LT);
+        }
+
+        throw new Error(`Invalid character "${this.char}" in context EMPTY`);
     }
 
     private contextTag(): Token {
-        // start of losing tag
         if (this.char === Vocabulary.FSLASH) {
             this.consume();
 
             return this.createToken(Types.FSLASH, Vocabulary.FSLASH);
-        }
-
-        if (this.isLetter()) {
-            this.setContext(Context.ATTRIBUTE);
+        } else if (this.isLetter()) {
+            this.context = Context.ATTRIBUTE;
 
             return this.tagName();
         }
@@ -87,7 +90,7 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
         if (this.char === Vocabulary.DBQUOTES) {
             this.consume();
 
-            this.setContext(Context.ATTRIBUTE_VALUE);
+            this.context = Context.ATTRIBUTE_VALUE;
 
             return this.createToken(Types.DBQUOTES, Vocabulary.DBQUOTES);
         }
@@ -101,8 +104,7 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
         if (this.char === Vocabulary.GT) {
             this.consume();
 
-            this.releaseContext();
-            this.releaseContext();
+            this.context = Context.CONTENT;
 
             return this.createToken(Types.GT, Vocabulary.GT);
         }
@@ -114,7 +116,7 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
         if (this.char === Vocabulary.LT) {
             this.consume();
 
-            this.setContext(Context.TAG);
+            this.context = Context.TAG;
 
             return this.createToken(Types.LT, Vocabulary.LT);
         } else {
@@ -126,7 +128,7 @@ export class HTMLLexer extends LL1RecursiveDescentLexer {
         if (this.char === Vocabulary.DBQUOTES) {
             this.consume();
 
-            this.releaseContext();
+            this.context = Context.ATTRIBUTE;
 
             return this.createToken(Types.DBQUOTES, Vocabulary.DBQUOTES);
         }
