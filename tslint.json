@@ -1,12 +1,48 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint-microsoft-contrib"
-    ],
-    "jsRules": {},
-    "rules": {
-        "no-reserved-keywords": false,
-        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"]
-    },
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": [
+      "tslint-microsoft-contrib"
+  ],
+  "jsRules": {},
+  "rules": {
+      "callable-types": false,
+      "completed-docs": false,
+      "interface-name": [
+          true,
+          "never-prefix"
+      ],
+      "missing-jsdoc": false,
+      "no-backbone-get-set-outside-model": false,
+      "no-bitwise": false,
+      "no-implicit-dependencies": false,
+      "no-relative-imports": false,
+      "no-reserved-keywords": false,
+      "no-submodule-imports": false,
+      "ordered-imports": [
+          true,
+          {
+              "grouped-imports": false,
+              "import-sources-order": "any",
+              "named-imports-order": "lowercase-first",
+              "module-source-path": "basename"
+          }
+      ],
+      "trailing-comma": [
+          true,
+          {
+              "multiline": "always",
+              "singleline": "never"
+          }
+      ],
+      "switch-default": false,
+      "switch-final-break": false,
+      "variable-name": [
+          true,
+          "ban-keywords",
+          "check-format",
+          "allow-leading-underscore",
+          "allow-pascal-case"
+      ]
+  },
+  "rulesDirectory": []
 }

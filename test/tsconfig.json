@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "declaration": true,
     "experimentalDecorators": true,
-    "module": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "dist",
+    "paths": {
+      "@apestaartje/lip/*": [
+        "../src/*"
+      ]
+    },
     "removeComments": true,
     "sourceMap": true,
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "target": "es6"
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+  }
 }

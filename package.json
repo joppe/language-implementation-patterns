@@ -1,22 +1,35 @@
 {
-  "name": "language-implementation-patterns",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/main.js",
+  "name": "lip",
+  "version": "2.0.0",
+  "description": "Language implementation patterns",
+  "scripts": {
+    "build": "npm run clean && node ./node_modules/.bin/tsc",
+    "clean": "rm -rf dist",
+    "lint": "tslint --config ./tslint.json --project tsconfig.json",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joppe/language-implementation-patterns"
+  },
   "author": {
     "name": "Joppe Aarts",
     "email": "joppe@apestaartje.info"
   },
-  "scripts": {
-    "start:dev": "webpack-dev-server"
-  },
   "license": "MIT",
+  "keywords": [
+    "TypeScript"
+  ],
   "devDependencies": {
-    "ts-loader": "^3.1.1",
-    "tslint": "^5.8.0",
-    "tslint-microsoft-contrib": "^5.0.1",
-    "typescript": "^2.6.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
-  }
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.2",
+    "coveralls": "^3.0.9",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "tslint": "^6.1.0",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {}
 }
