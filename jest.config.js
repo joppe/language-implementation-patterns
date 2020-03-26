@@ -3,16 +3,29 @@ module.exports = {
     globals: {
         'ts-jest': {
             tsConfig: {
+                inlineSourceMap: true,
                 module: 'commonjs',
                 paths: {
-                    '@apestaartje/lip/*': ['src/*']
-                }
-            }
-        }
+                    '@apestaartje/lip/*': [
+                        'src/*',
+                    ],
+                },
+                sourceMap: false,
+            },
+        },
     },
     moduleNameMapper: {
-        '^@apestaartje/lip/(.*)$': '<rootDir>/src/$1'
+        '^@apestaartje/lip/(.*)$': '<rootDir>/src/$1',
     },
     preset: 'ts-jest',
-    setupFilesAfterEnv: ['./jest.setup.js']
+    transform: {
+        '^.+\\.tsx?$': 'ts-jest',
+        '^.+\\.jsx?$': 'babel-jest',
+    },
+    transformIgnorePatterns: [
+        '/node_modules/(?!@apestaartje).+(js|jsx)$',
+    ],
+    setupFilesAfterEnv: [
+        './jest.setup.js',
+    ],
 };
