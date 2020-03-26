@@ -16,32 +16,34 @@ export class MemoizedListParser extends MemoizingParser {
      */
     public stat(): void {
         if (this.speculateStatList()) {
-            this.list();
-            this.match(EOF_TYPE);
+            this.statList();
         } else if (this.speculateStatAssign()) {
-            this.assign();
-            this.match(EOF_TYPE);
+            this.statAssign();
         } else {
             throw new Error(`Expecting stat found "${this.getLookaheadToken(1)}"`);
         }
     }
 
     public speculateStatList(): boolean {
-        window.console.log('Attempt list');
-
         return this.speculate((): void => {
-            this.list();
-            this.match(EOF_TYPE);
+            this.statList();
         });
     }
 
     public speculateStatAssign(): boolean {
-        window.console.log('Attempt assign');
-
         return this.speculate((): void => {
-            this.assign();
-            this.match(EOF_TYPE);
+            this.statAssign();
         });
+    }
+
+    public statList(): void {
+        this.list();
+        this.match(EOF_TYPE);
+    }
+
+    public statAssign(): void {
+        this.assign();
+        this.match(EOF_TYPE);
     }
 
     /**

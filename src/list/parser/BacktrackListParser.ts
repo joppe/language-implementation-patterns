@@ -13,11 +13,9 @@ import { Types } from '../token/Types';
 export class BacktrackListParser extends BacktrackParser {
     public stat(): void {
         if (this.speculateStatList()) {
-            this.list();
-            this.match(EOF_TYPE);
+            this.statList();
         } else if (this.speculateStatAssign()) {
-            this.assign();
-            this.match(EOF_TYPE);
+            this.statAssign();
         } else {
             throw new Error(`Expecting stat found "${this.getLookaheadToken(1)}"`);
         }
@@ -25,18 +23,29 @@ export class BacktrackListParser extends BacktrackParser {
 
     public speculateStatList(): boolean {
         return this.speculate((): void => {
-            this.list();
-            this.match(EOF_TYPE);
+            this.statList();
         });
     }
 
     public speculateStatAssign(): boolean {
         return this.speculate((): void => {
-            this.assign();
-            this.match(EOF_TYPE);
+            this.statAssign();
         });
     }
 
+    public statList(): void {
+        this.list();
+        this.match(EOF_TYPE);
+    }
+
+    public statAssign(): void {
+        this.assign();
+        this.match(EOF_TYPE);
+    }
+
+    /**
+     * Match: list '=' list
+     */
     public assign(): void {
         this.list();
         this.match(Types.EQAULS);
