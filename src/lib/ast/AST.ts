@@ -1,4 +1,4 @@
-import { Buffer } from '../string/Buffer';
+import { StringBuffer } from '../string/StringBuffer';
 import { Token } from '../token/Token';
 
 export class AST {
@@ -34,7 +34,7 @@ export class AST {
             return this.toString();
         }
 
-        const buffer: Buffer = new Buffer();
+        const buffer: StringBuffer = new StringBuffer();
 
         if (!this.isNil()) {
             buffer.append('(');

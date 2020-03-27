@@ -1,4 +1,4 @@
-export enum Types {
+export enum TokenTypes {
     LT = 2,
     GT,
     BSLASH,

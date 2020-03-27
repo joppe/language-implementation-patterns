@@ -1,10 +1,10 @@
-import { Buffer } from '../../lib/string/Buffer';
+import { StringBuffer } from '../../lib/string/StringBuffer';
 import { EOF } from '../../lib/token/vocabulary';
-import { EOF_TYPE } from '../../lib/token/Type';
+import { EOF_TYPE } from '../../lib/token/TokenType';
 import { LL1RecursiveDescentLexer } from '../../lib/lexer/LL1RecursiveDescentLexer';
-import { Names } from '../token/Names';
+import { TokenNames } from '../token/TokenNames';
 import { Token } from '../../lib/token/Token';
-import { Types } from '../token/Types';
+import { TokenTypes } from '../token/TokenTypes';
 import { Vocabulary, WHITESPACE_RE } from '../token/Vocabulary';
 
 export class LL1ListLexer extends LL1RecursiveDescentLexer {
@@ -15,15 +15,15 @@ export class LL1ListLexer extends LL1RecursiveDescentLexer {
             } else if (this.char === Vocabulary.COMMA) {
                 this.consume();
 
-                return this.createToken(Types.COMMA, Vocabulary.COMMA);
+                return this.createToken(TokenTypes.COMMA, Vocabulary.COMMA);
             } else if (this.char === Vocabulary.LBRACK) {
                 this.consume();
 
-                return this.createToken(Types.LBRACK, Vocabulary.LBRACK);
+                return this.createToken(TokenTypes.LBRACK, Vocabulary.LBRACK);
             } else if (this.char === Vocabulary.RBRACK) {
                 this.consume();
 
-                return this.createToken(Types.RBRACK, Vocabulary.RBRACK);
+                return this.createToken(TokenTypes.RBRACK, Vocabulary.RBRACK);
             } else if (this.isLetter()) {
                 return this.name();
             } else {
@@ -31,11 +31,11 @@ export class LL1ListLexer extends LL1RecursiveDescentLexer {
             }
         }
 
-        return this.createToken(EOF_TYPE, Names[EOF_TYPE]);
+        return this.createToken(EOF_TYPE, TokenNames[EOF_TYPE]);
     }
 
     public getTokenName(type: number): string {
-        const name: string = Names[type];
+        const name: string = TokenNames[type];
 
         if (name !== undefined) {
             return name;
@@ -48,7 +48,7 @@ export class LL1ListLexer extends LL1RecursiveDescentLexer {
      * Get all text belonging to a single NAME token.
      */
     protected name(): Token {
-        const buffer: Buffer = new Buffer();
+        const buffer: StringBuffer = new StringBuffer();
 
         do {
             buffer.append(this.char);
@@ -56,7 +56,7 @@ export class LL1ListLexer extends LL1RecursiveDescentLexer {
             this.consume();
         } while (this.isLetter());
 
-        return this.createToken(Types.NAME, buffer.toString());
+        return this.createToken(TokenTypes.NAME, buffer.toString());
     }
 
     /**

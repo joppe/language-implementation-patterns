@@ -1,4 +1,4 @@
-import { EOF_TYPE } from '../../lib/token/Type';
+import { EOF_TYPE } from '../../lib/token/TokenType';
 import { Lexer } from '../../lib/lexer/Lexer';
 import { LLkRecursiveDescentParser } from '../../lib/parser/LLkRecursiveDescentParser';
 import { ParseTree } from '../../lib/parser/tree/ParseTree';
@@ -6,7 +6,7 @@ import { rule } from '../../lib/parser/tree/rule';
 import { RuleNode } from '../../lib/parser/tree/RuleNode';
 import { SELF_CLOSING_TAGS } from '../token/Vocabulary';
 import { TokenNode } from '../../lib/parser/tree/TokenNode';
-import { Types } from '../token/Types';
+import { TokenTypes } from '../token/TokenTypes';
 
 export class HTMLParser extends LLkRecursiveDescentParser {
     private readonly _tagStack: string[] = [];
@@ -27,7 +27,7 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     @rule
     public document(): void {
-        while (this.getLookaheadType(1) === Types.LT) {
+        while (this.getLookaheadType(1) === TokenTypes.LT) {
             this.element();
         }
 
@@ -38,7 +38,7 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     @rule
     public element(): void {
-        if (this.getLookaheadType(2) !== Types.TAG_NAME) {
+        if (this.getLookaheadType(2) !== TokenTypes.TAG_NAME) {
             throw new Error(`Expecting tag name, found ${this.getLookaheadToken(2)}`);
         }
 
@@ -51,16 +51,16 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     @rule
     public tagSelfClosing(): void {
-        this.match(Types.LT);
-        this.match(Types.TAG_NAME);
+        this.match(TokenTypes.LT);
+        this.match(TokenTypes.TAG_NAME);
 
         this.attrList();
 
-        if (this.getLookaheadType(1) === Types.FSLASH) {
-            this.match(Types.FSLASH);
+        if (this.getLookaheadType(1) === TokenTypes.FSLASH) {
+            this.match(TokenTypes.FSLASH);
         }
 
-        this.match(Types.GT);
+        this.match(TokenTypes.GT);
     }
 
     @rule
@@ -72,24 +72,24 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     @rule
     public tagOpen(): void {
-        this.match(Types.LT);
+        this.match(TokenTypes.LT);
 
         this.openTag(this.getLookaheadToken(1).text);
-        this.match(Types.TAG_NAME);
+        this.match(TokenTypes.TAG_NAME);
 
         this.attrList();
 
-        this.match(Types.GT);
+        this.match(TokenTypes.GT);
     }
 
     @rule
     public tagContent(): void {
         while (
-            this.getLookaheadType(1) === Types.CONTENT ||
-            (this.getLookaheadType(1) === Types.LT && this.getLookaheadType(2) !== Types.FSLASH)
+            this.getLookaheadType(1) === TokenTypes.CONTENT ||
+            (this.getLookaheadType(1) === TokenTypes.LT && this.getLookaheadType(2) !== TokenTypes.FSLASH)
             ) {
-            if (this.getLookaheadType(1) === Types.CONTENT) {
-                this.match(Types.CONTENT);
+            if (this.getLookaheadType(1) === TokenTypes.CONTENT) {
+                this.match(TokenTypes.CONTENT);
             } else {
                 this.element();
             }
@@ -98,31 +98,31 @@ export class HTMLParser extends LLkRecursiveDescentParser {
 
     @rule
     public tagClose(): void {
-        this.match(Types.LT);
-        this.match(Types.FSLASH);
+        this.match(TokenTypes.LT);
+        this.match(TokenTypes.FSLASH);
 
         this.closeTag(this.getLookaheadToken(1).text);
-        this.match(Types.TAG_NAME);
-        this.match(Types.GT);
+        this.match(TokenTypes.TAG_NAME);
+        this.match(TokenTypes.GT);
     }
 
     @rule
     public attrList(): void {
-        while (this.getLookaheadType(1) === Types.ATTRIBUTE_NAME) {
+        while (this.getLookaheadType(1) === TokenTypes.ATTRIBUTE_NAME) {
             this.attr();
         }
     }
 
     @rule
     public attr(): void {
-        if (this.getLookaheadType(1) === Types.ATTRIBUTE_NAME && this.getLookaheadType(2) === Types.EQUALS) {
-            this.match(Types.ATTRIBUTE_NAME);
-            this.match(Types.EQUALS);
-            this.match(Types.DBQUOTES);
-            this.match(Types.ATTRIBUTE_VALUE);
-            this.match(Types.DBQUOTES);
-        } else if (this.getLookaheadType(1) === Types.ATTRIBUTE_NAME) {
-            this.match(Types.ATTRIBUTE_NAME);
+        if (this.getLookaheadType(1) === TokenTypes.ATTRIBUTE_NAME && this.getLookaheadType(2) === TokenTypes.EQUALS) {
+            this.match(TokenTypes.ATTRIBUTE_NAME);
+            this.match(TokenTypes.EQUALS);
+            this.match(TokenTypes.DBQUOTES);
+            this.match(TokenTypes.ATTRIBUTE_VALUE);
+            this.match(TokenTypes.DBQUOTES);
+        } else if (this.getLookaheadType(1) === TokenTypes.ATTRIBUTE_NAME) {
+            this.match(TokenTypes.ATTRIBUTE_NAME);
         } else {
             throw new Error(`Expecting attribute name token, found ${this.getLookaheadToken(1)}`);
         }

@@ -1,4 +1,4 @@
-export class Buffer {
+export class StringBuffer {
     private _string: string = '';
 
     public append(str: string): void {

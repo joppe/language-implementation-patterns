@@ -1,7 +1,7 @@
 import { LL1ListLexer } from '@apestaartje/lip/list/lexer/LL1ListLexer';
 import { Token } from '@apestaartje/lip/lib/token/Token';
-import { Types } from '@apestaartje/lip/list/token/Types';
-import { EOF_TYPE } from '@apestaartje/lip/lib/token/Type';
+import { TokenTypes } from '@apestaartje/lip/list/token/TokenTypes';
+import { EOF_TYPE } from '@apestaartje/lip/lib/token/TokenType';
 
 describe('LL1ListLexer', (): void => {
     describe('nextToken', (): void => {
@@ -10,7 +10,7 @@ describe('LL1ListLexer', (): void => {
             const lexer: LL1ListLexer = new LL1ListLexer(input);
             const token: Token = lexer.nextToken();
 
-            expect(token.type).toEqual(Types.LBRACK);
+            expect(token.type).toEqual(TokenTypes.LBRACK);
             expect(token.text).toEqual('[');
         });
 
@@ -22,7 +22,7 @@ describe('LL1ListLexer', (): void => {
 
             const token: Token = lexer.nextToken();
 
-            expect(token.type).toEqual(Types.NAME);
+            expect(token.type).toEqual(TokenTypes.NAME);
             expect(token.text).toEqual('a');
 
         });
@@ -43,7 +43,7 @@ describe('LL1ListLexer', (): void => {
         const lexer: LL1ListLexer = new LL1ListLexer(input);
         const token: Token = lexer.nextToken();
 
-        expect(token.type).toEqual(Types.LBRACK);
+        expect(token.type).toEqual(TokenTypes.LBRACK);
         expect(token.text).toEqual('[');
     });
 

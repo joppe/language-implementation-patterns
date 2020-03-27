@@ -1,4 +1,4 @@
-export enum Context {
+export enum LexerContext {
     EMPTY,
     TAG,
     ATTRIBUTE,

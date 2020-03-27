@@ -1,6 +1,6 @@
-import { EOF_TYPE } from '../../lib/token/Type';
+import { EOF_TYPE } from '../../lib/token/TokenType';
 import { MemoizingParser } from '../../lib/parser/MemoizingParser';
-import { Types } from '../token/Types';
+import { TokenTypes } from '../token/TokenTypes';
 
 /**
  * stat: list EOF | assign EOF;
@@ -51,7 +51,7 @@ export class MemoizedListParser extends MemoizingParser {
      */
     public assign(): void {
         this.list();
-        this.match(Types.EQAULS);
+        this.match(TokenTypes.EQAULS);
         this.list();
     }
 
@@ -60,9 +60,9 @@ export class MemoizedListParser extends MemoizingParser {
      */
     public list(): void {
         this.memoizeRule('list', (): void => {
-            this.match(Types.LBRACK);
+            this.match(TokenTypes.LBRACK);
             this.elements();
-            this.match(Types.RBRACK);
+            this.match(TokenTypes.RBRACK);
         });
     }
 
@@ -72,8 +72,8 @@ export class MemoizedListParser extends MemoizingParser {
     public elements(): void {
         this.element();
 
-        while (this.getLookaheadType(1) === Types.COMMA) {
-            this.match(Types.COMMA);
+        while (this.getLookaheadType(1) === TokenTypes.COMMA) {
+            this.match(TokenTypes.COMMA);
             this.element();
         }
     }
@@ -83,15 +83,15 @@ export class MemoizedListParser extends MemoizingParser {
      */
     public element(): void {
         if (
-            this.getLookaheadType(1) === Types.NAME &&
-            this.getLookaheadType(2) === Types.EQAULS
+            this.getLookaheadType(1) === TokenTypes.NAME &&
+            this.getLookaheadType(2) === TokenTypes.EQAULS
         ) {
-            this.match(Types.NAME);
-            this.match(Types.EQAULS);
-            this.match(Types.NAME);
-        } else if (this.getLookaheadType(1) === Types.NAME) {
-            this.match(Types.NAME);
-        } else if (this.getLookaheadType(1) === Types.LBRACK) {
+            this.match(TokenTypes.NAME);
+            this.match(TokenTypes.EQAULS);
+            this.match(TokenTypes.NAME);
+        } else if (this.getLookaheadType(1) === TokenTypes.NAME) {
+            this.match(TokenTypes.NAME);
+        } else if (this.getLookaheadType(1) === TokenTypes.LBRACK) {
             this.list();
         } else {
             throw new Error(`Expecting name or list, found "${this.getLookaheadToken(1)}"`);

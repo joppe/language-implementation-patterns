@@ -1,9 +1,9 @@
 import { EOF } from '../../lib/token/vocabulary';
-import { EOF_TYPE } from '../../lib/token/Type';
+import { EOF_TYPE } from '../../lib/token/TokenType';
 import { LL1ListLexer } from './LL1ListLexer';
-import { Names } from '../token/Names';
+import { TokenNames } from '../token/TokenNames';
 import { Token } from '../../lib/token/Token';
-import { Types } from '../token/Types';
+import { TokenTypes } from '../token/TokenTypes';
 import { Vocabulary } from '../token/Vocabulary';
 
 export class LL1AdvancedListLexer extends LL1ListLexer {
@@ -14,19 +14,19 @@ export class LL1AdvancedListLexer extends LL1ListLexer {
             } else if (this.char === Vocabulary.COMMA) {
                 this.consume();
 
-                return this.createToken(Types.COMMA, Vocabulary.COMMA);
+                return this.createToken(TokenTypes.COMMA, Vocabulary.COMMA);
             } else if (this.char === Vocabulary.EQUALS) {
                 this.consume();
 
-                return this.createToken(Types.EQAULS, Vocabulary.EQUALS);
+                return this.createToken(TokenTypes.EQAULS, Vocabulary.EQUALS);
             } else if (this.char === Vocabulary.LBRACK) {
                 this.consume();
 
-                return this.createToken(Types.LBRACK, Vocabulary.LBRACK);
+                return this.createToken(TokenTypes.LBRACK, Vocabulary.LBRACK);
             } else if (this.char === Vocabulary.RBRACK) {
                 this.consume();
 
-                return this.createToken(Types.RBRACK, Vocabulary.RBRACK);
+                return this.createToken(TokenTypes.RBRACK, Vocabulary.RBRACK);
             } else if (this.isLetter()) {
                 return this.name();
             } else {
@@ -34,6 +34,6 @@ export class LL1AdvancedListLexer extends LL1ListLexer {
             }
         }
 
-        return this.createToken(EOF_TYPE, Names[EOF_TYPE]);
+        return this.createToken(EOF_TYPE, TokenNames[EOF_TYPE]);
     }
 }

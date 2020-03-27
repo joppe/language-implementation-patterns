@@ -1,7 +1,7 @@
 import { HTMLLexer } from '@apestaartje/lip/html/lexer/HTMLLexer';
 import { Token } from '@apestaartje/lip/lib/token/Token';
-import { Types } from '@apestaartje/lip/html/token/Types';
-import { EOF_TYPE } from '@apestaartje/lip/lib/token/Type';
+import { TokenTypes } from '@apestaartje/lip/html/token/TokenTypes';
+import { EOF_TYPE } from '@apestaartje/lip/lib/token/TokenType';
 
 describe('HTMLLexer', (): void => {
     describe('nextToken', (): void => {
@@ -11,7 +11,7 @@ describe('HTMLLexer', (): void => {
 
             const token: Token = lexer.nextToken();
 
-            expect(token.type).toEqual(Types.LT);
+            expect(token.type).toEqual(TokenTypes.LT);
             expect(token.text).toEqual('<');
         });
     });

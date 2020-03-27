@@ -1,6 +1,6 @@
 import { HTMLParser } from '@apestaartje/lip/html/parser/HTMLParser';
 import { HTMLLexer } from '@apestaartje/lip/html/lexer/HTMLLexer';
-import { EOF_TYPE } from '@apestaartje/lip/lib/token/Type';
+import { EOF_TYPE } from '@apestaartje/lip/lib/token/TokenType';
 
 describe('HTMLParser', (): void => {
     describe('parse', (): void => {
