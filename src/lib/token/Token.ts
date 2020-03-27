@@ -1,28 +1,15 @@
 export class Token {
-    private readonly _name: string;
+    public readonly name: string | undefined;
+    public readonly text: string;
+    public readonly type: number;
 
-    private readonly _text: string;
-
-    /**
-     * Symbol category
-     */
-    private readonly _type: number;
-
-    public constructor(type: number, name: string, text: string) {
-        this._type = type;
-        this._name = name;
-        this._text = text;
-    }
-
-    public get type(): number {
-        return this._type;
-    }
-
-    public get text(): string {
-        return this._text;
+    public constructor(type: number, name?: string, text: string = '') {
+        this.name = name;
+        this.text = text;
+        this.type = type;
     }
 
     public toString(): string {
-        return `<'${this._text}',${this._name}>`;
+        return `<'${this.text}',${this.name}>`;
     }
 }
