@@ -7,22 +7,43 @@ describe('AST', (): void => {
         INT,
     }
 
-    it('toString', (): void => {
-        const plus: Token = new Token(TokenType.PLUS, 'plus', '+');
-        const ast: AST = new AST(plus);
+    describe('toString', (): void => {
+        it('with a token', (): void => {
+            const plus: Token = new Token(TokenType.PLUS, 'plus', '+');
+            const ast: AST = new AST(plus);
 
-        expect(ast.toString()).toEqual('+');
+            expect(ast.toString()).toEqual('+');
+        });
+
+        it('without token', (): void => {
+            const ast: AST = new AST();
+
+            expect(ast.toString()).toBe('nil');
+        });
     });
 
-    it('toStringTree', (): void => {
-        const plus: Token = new Token(TokenType.PLUS, 'plus', '+');
-        const one: Token = new Token(TokenType.INT, 'int', '1');
-        const two: Token = new Token(TokenType.INT, 'int', '2');
-        const ast: AST = new AST(plus);
+    describe('toStringTree', (): void => {
+        it('with root node', (): void => {
+            const plus: Token = new Token(TokenType.PLUS, 'plus', '+');
+            const one: Token = new Token(TokenType.INT, 'int', '1');
+            const two: Token = new Token(TokenType.INT, 'int', '2');
+            const ast: AST = new AST(plus);
 
-        ast.addChild(new AST(one));
-        ast.addChild(new AST(two));
+            ast.addChild(new AST(one));
+            ast.addChild(new AST(two));
 
-        expect(ast.toStringTree()).toEqual('(+ 1 2)');
+            expect(ast.toStringTree()).toEqual('(+ 1 2)');
+        });
+
+        it('without root node', (): void => {
+            const one: Token = new Token(TokenType.INT, 'int', '1');
+            const two: Token = new Token(TokenType.INT, 'int', '2');
+            const ast: AST = new AST();
+
+            ast.addChild(new AST(one));
+            ast.addChild(new AST(two));
+
+            expect(ast.toStringTree()).toEqual('1 2');
+        });
     });
 });
